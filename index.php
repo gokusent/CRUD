@@ -63,6 +63,7 @@ $tareas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php echo nl2br(htmlspecialchars($tarea['descripcion'])); ?><br />
                     <small>Creada el: <?php echo $tarea['fecha_creacion']; ?></small>
                     <a href="index.php?eliminar=<?php echo $tarea['id']; ?>" onclick="return confirm('¿Seguro que quieres eliminar esta tarea?')">Eliminar</a>
+                    <a href="editar.php?id=<?php echo $tarea['id']; ?>">Editar</a>
                 </li>
                 <?php endforeach; ?>
         </ul>

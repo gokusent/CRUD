@@ -17,6 +17,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['titulo'])) {
     }
 }
 
+if (isset($_GET['eliminar'])) {
+    $id = (int)$_GET['eliminar'];
+    $stmt = $conexion->prepare("DELETE FROM tareas WHERE id = :id");
+    $stmt->execute(['id' => $id]);
+    header("Location: index.php");
+    exit;
+}
+
 // Obtener todas las tareas
 $stmt = $conexion->query("SELECT * FROM tareas ORDER BY fecha_creacion DESC");
 $tareas = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -54,6 +62,7 @@ $tareas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <strong><?php echo htmlspecialchars($tarea['titulo']); ?></strong>
                     <?php echo nl2br(htmlspecialchars($tarea['descripcion'])); ?><br />
                     <small>Creada el: <?php echo $tarea['fecha_creacion']; ?></small>
+                    <a href="index.php?eliminar=<?php echo $tarea['id']; ?>" onclick="return confirm('¿Seguro que quieres eliminar esta tarea?')">Eliminar</a>
                 </li>
                 <?php endforeach; ?>
         </ul>

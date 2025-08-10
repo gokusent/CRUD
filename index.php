@@ -35,6 +35,7 @@ $tareas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Gestor de Tareas</title>
 </head>
 <body>
@@ -59,7 +60,7 @@ $tareas = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <ul>
             <?php foreach ($tareas as $tarea): ?>
                 <li>
-                    <strong><?php echo htmlspecialchars($tarea['titulo']); ?></strong>
+                    <strong><?php echo htmlspecialchars($tarea['titulo']); ?></strong><br />
                     <?php echo nl2br(htmlspecialchars($tarea['descripcion'])); ?><br />
                     <small>Creada el: <?php echo $tarea['fecha_creacion']; ?></small>
                     <a href="index.php?eliminar=<?php echo $tarea['id']; ?>" onclick="return confirm('¿Seguro que quieres eliminar esta tarea?')">Eliminar</a>

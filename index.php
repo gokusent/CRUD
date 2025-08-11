@@ -28,6 +28,20 @@ if (isset($_GET['eliminar'])) {
 // Obtener todas las tareas
 $stmt = $conexion->query("SELECT * FROM tareas ORDER BY fecha_creacion DESC");
 $tareas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$sql = "SELECT * FROM tareas";
+$params = [];
+
+if (!empty($_POST['buscar'])) {
+    $sql .= " WHERE titulo LIKE :buscar OR descripcion LIKE :buscar";
+    $params['buscar'] = "%" . $_POST['buscar'] . "%";
+}
+
+$sql .= " ORDER BY fecha_creacion DESC";
+
+$stmt2 = $conexion->prepare($sql);
+$stmt2->execute($params);
+$tareas = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -53,6 +67,9 @@ $tareas = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <button type="submit">Agregar Tarea</button>
     </form>
 
+    <form method="post" action="index.php">
+        <input type="text" name="buscar" placeholder="Filtrar tareas..." value="<?php echo isset($_GET['buscar']) ? htmlspecialchars($_GET['buscar']) : ''; ?>">
+    </form>
     <h2>Lista de tareas</h2>
     <?php if(count($tareas) === 0): ?>
         <p>No hay tareas aún.</p>

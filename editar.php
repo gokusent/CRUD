@@ -52,10 +52,10 @@ if (!$tarea) {
         <textarea id="descripcion" name="descripcion"><?php echo htmlspecialchars($tarea['descripcion']); ?></textarea><br /><br />
 
         <button type="submit">Editar</button>
+        
+        <form method="get" action="index.php">
+            <button type="submit">Volver</button>
+        </form>
     </form><br />
-
-    <form method="get" action="index.php">
-        <button type="submit">Volver</button>
-    </form>
 </body>
 </html>
